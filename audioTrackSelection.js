@@ -20,7 +20,6 @@ videojs.registerPlugin('autoAudioTrackSelection', function()
             return;
         }
 
-
         // Get the language code passed in the URL
         var langCode = getLangCode();
         console.log ('Lang Code extracted : ', langCode);
@@ -31,7 +30,6 @@ videojs.registerPlugin('autoAudioTrackSelection', function()
         }
         /* Now we have the valid lang code, and we have more than one audio track, so we can try to set the audio track to the lang code (ISO 639-1 code)
         */
-
         var isAudioTrackSet = false; // Just to check if we were able to set the track successfully
         for (var i = 0; i < (audioTracks.length); i++)
         {
@@ -96,6 +94,10 @@ function getLangCode()
 }
 
 
+/**
+List of ISO 639-1 language codes.
+I copied this from https://gist.github.com/Josantonius/b455e315bc7f790d14b136d61d9ae469 
+*/
 var iso639_1_List =
 {
     "aa": "Afar",
@@ -383,7 +385,6 @@ var iso639_1_List =
     "zh-tw": "Chinese (Taiwan)",
     "zu": "Zulu"
 };
-
 
 // Function that checks if the lang code is valid ISO 639-1 code or not
 // return flase if not valid
