@@ -1,3 +1,8 @@
+
+/**  Player plugin to set the audio track in the player to the value passed from the URL
+*/
+
+
 videojs.registerPlugin('autoAudioTrackSelection', function()
 {
     var myPlayer = this;
@@ -9,16 +14,25 @@ videojs.registerPlugin('autoAudioTrackSelection', function()
         audioTracks = myPlayer.audioTracks();
 
         // If we have a single or no audio track, we do not need to do anything
-        /**
         if (audioTracks.length <= 1)
+        {
+            console.log("Single Audio track exists in the video, not required to set the track");
             return;
-        **/
+        }
+
+
         // Get the language code passed in the URL
         var langCode = getLangCode();
         console.log ('Lang Code extracted : ', langCode);
         if (null == langCode)
+        {
+            console.log("Invlid Lang code, so not setting the audio track");
             return;
+        }
+        /* Now we have the valid lang code, and we have more than one audio track, so we can try to set the audio track to the lang code (ISO 639-1 code)
+        */
 
+        var isAudioTrackSet = false; // Just to check if we were able to set the track successfully
         for (var i = 0; i < (audioTracks.length); i++)
         {
             trackLanguage = audioTracks[i].language;
@@ -32,11 +46,14 @@ videojs.registerPlugin('autoAudioTrackSelection', function()
                 {
                     // Only one audio track can be enabled. So the audio track will be selected once it is enabled.
                     audioTracks[i].enabled = true;
+                    isAudioTrackSet = true;
                     console.log('Changed the audio track to ', langCode);
                     break;
                 }
             }
         }
+        if (!isAudioTrackSet)
+            console.log('*** Audion Track was not set for lang code:', langCode);
   })
 });
 
@@ -45,7 +62,6 @@ videojs.registerPlugin('autoAudioTrackSelection', function()
 We assume that the language parameter passed in the URL follows the ISO 639-1
 standard.
 If a proper language code is not detected, function will return null value
-
 */
 function getLangCode()
 {
@@ -373,11 +389,10 @@ var iso639_1_List =
 // return flase if not valid
 function isValidLangCode(lnCode)
 {
-    console.log('isValidLangCode lnCode', lnCode);
+    console.log('isValidLangCode() lnCode:', lnCode);
     if (null == lnCode)
         return false;
 
-    // console.log('str lne ', lnCode.trim().length);
     if(0 == lnCode.trim().length)
         return false;
 
