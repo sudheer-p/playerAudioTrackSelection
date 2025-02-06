@@ -64,9 +64,12 @@ If a proper language code is not detected, function will return null value
 function getLangCode()
 {
     var langCode = null;
+    
     // First check the Query string if we have any luck from the query parameter
     // the lang code can be passed as value of 'lang' or 'language' parameter
     // in the URL
+    // e.g https://hdfcbank.com/89487394/vidoe/video.html?lang=hi
+    // https://hdfcbank.com/89487394/vidoe/video.html?language=hi
     const queryParamList = new URLSearchParams(window.location.search);
     if ((queryParamList.has('lang')) || (queryParamList.has('language')))
     {
@@ -96,7 +99,7 @@ function getLangCode()
 
 /**
 List of ISO 639-1 language codes.
-I copied this from https://gist.github.com/Josantonius/b455e315bc7f790d14b136d61d9ae469 
+I copied this from https://gist.github.com/Josantonius/b455e315bc7f790d14b136d61d9ae469
 */
 var iso639_1_List =
 {
@@ -399,7 +402,9 @@ function isValidLangCode(lnCode)
 
     console.log('lang code object type', typeof iso639_1_List[lnCode]);
 
-    if ("undefined" == typeof iso639_1_List[lnCode])
+    // Note that in our system, the lang code can be in upper case e.g  es-MX
+    // but in our standard langCode structure, all are in lowercase
+    if ("undefined" == typeof iso639_1_List[lnCode.toLowerCase()])
         return false;
 
     return true;
