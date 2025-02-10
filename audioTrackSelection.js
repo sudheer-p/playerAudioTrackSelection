@@ -16,7 +16,7 @@ videojs.registerPlugin('autoAudioTrackSelection', function()
         // If we have a single or no audio track, we do not need to do anything
         if (audioTracks.length <= 1)
         {
-            console.log("Single Audio track exists in the video, not required to set the track");
+            console.log("Single Audio (%s) track exists in the video, not required to set the track", audioTracks[0].language);
             return;
         }
 
@@ -64,7 +64,7 @@ If a proper language code is not detected, function will return null value
 function getLangCode()
 {
     var langCode = null;
-    
+
     // First check the Query string if we have any luck from the query parameter
     // the lang code can be passed as value of 'lang' or 'language' parameter
     // in the URL
