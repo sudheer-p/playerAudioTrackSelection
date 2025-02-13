@@ -1,4 +1,4 @@
-# playerAudionTrackSelection
+# playerAudioTrackSelection
  Player Plugin to set the audio track based on the parameter password from the URL
 
 - The desired audio track language can be passed via the URL in two ways
